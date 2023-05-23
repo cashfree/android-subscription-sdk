@@ -27,9 +27,14 @@ class MainViewModel @Inject constructor(
             service.createSubscription(headers, param)
         }
         viewModelScope.launch {
-            val result = job.await()
-            _subscription.value = ApiState.Loading(false)
-            _subscription.value = ApiState.Success(result)
+            try {
+                val result = job.await()
+                _subscription.value = ApiState.Loading(false)
+                _subscription.value = ApiState.Success(result)
+            } catch (e: Exception) {
+                _subscription.value = ApiState.Loading(false)
+                _subscription.value = ApiState.Failure(Throwable(e.message ?: "Some Error"))
+            }
         }
     }
 }
