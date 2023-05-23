@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SusbcriptionSDK</string>
+    <string name="subscription_id">Subscription Id</string>
+    <string name="plan_id">Plan Id</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="customer_phone">Customer Phone</string>
+    <string name="return_url">Return Url</string>
+    <string name="create_subscription">Create Subscription</string>
+    <string name="make_payment">Make Payment</string>
+</resources>
