@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="450dp"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/cf_dimen_32">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/cf_dimen_32"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/cf_exiting_payment"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/cf_text_size_18"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:text="@string/cf_are_you_sure_you_want_to_exit_payment"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/cf_text_size_16" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/cf_dimen_8"
+        android:layout_marginBottom="@dimen/cf_dimen_8"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_yes"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/cf_dimen_16"
+            android:text="@string/cf_cta_yes"
+            android:textAllCaps="false"
+            android:textSize="@dimen/cf_text_size_16" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_no"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/cf_dimen_8"
+            android:text="@string/cf_cta_no"
+            android:textAllCaps="false"
+            android:textSize="@dimen/cf_text_size_16" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

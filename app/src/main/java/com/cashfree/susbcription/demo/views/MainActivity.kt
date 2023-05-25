@@ -1,14 +1,17 @@
 package com.cashfree.susbcription.demo.views
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.cashfree.susbcription.demo.helper.Util
+import androidx.appcompat.app.AppCompatActivity
+import com.cashfree.susbcription.coresdk.payment.Constants
+import com.cashfree.susbcription.coresdk.ui.SubscriptionPaymentActivity
 import com.cashfree.susbcription.demo.databinding.ActivityMainBinding
+import com.cashfree.susbcription.demo.helper.Util
+import com.cashfree.susbcription.demo.helper.visibility
 import com.cashfree.susbcription.demo.network.ApiState
 import com.cashfree.susbcription.demo.network.SubscriptionRequest
-import com.cashfree.susbcription.demo.helper.visibility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeDataChange() {
         viewModel.subscription.observe(this) { state ->
             when (state) {
-                is ApiState.Success -> showToast(state.data.toString())
+                is ApiState.Success -> openWebPaymentFlow(state.data.authLink)
                 is ApiState.Loading -> binding.progress.visibility(state.isLoading)
                 is ApiState.Failure -> showToast(state.failure.message ?: "")
             }
@@ -43,6 +46,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openWebPaymentFlow(url: String) {
+        val intent = Intent(this, SubscriptionPaymentActivity::class.java)
+        intent.putExtras(getPaymentCheckoutBundle(url))
+        startActivity(intent)
+    }
+
+    private fun getPaymentCheckoutBundle(url: String): Bundle {
+        return Bundle().apply {
+            putString(Constants.PAYMENT_URL, url)
+        }
     }
 
     private fun initBasicData() {
