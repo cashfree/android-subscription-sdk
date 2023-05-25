@@ -8,7 +8,6 @@ import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -20,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
+import com.cashfree.pg.base.logger.CFLoggerService
 import com.cashfree.susbcription.coresdk.databinding.SubscriptionPaymentActivityBinding
 import com.cashfree.susbcription.coresdk.payment.Constants
 import com.cashfree.susbcription.coresdk.payment.Constants.WB_INTENT_BRIDGE
@@ -42,6 +42,7 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = SubscriptionPaymentActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        CFLoggerService.getInstance().setLoggingLevel(3)
         setToolbar()
         setWebView()
         loadUrl()
@@ -97,16 +98,16 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
         binding.paymentWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                Log.v(TAG, "onPageFinished---->> $url")
+                CFLoggerService.getInstance().d(TAG, "onPageFinished-->>$url")
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                Log.v(TAG, "onPageStarted---->> $url")
+                CFLoggerService.getInstance().d(TAG, "onPageStarted-->>$url")
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Log.v(TAG, "ShouldOverrideUrlLoading---->> $url")
+                CFLoggerService.getInstance().d(TAG, "shouldOverrideUrlLoading-->>$url")
                 return false
             }
 
@@ -146,23 +147,19 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
     private fun addWebHelperInterfaceImplementation(): WebHelperInterface {
         return object : WebHelperInterface {
             override fun getUpiAppList(link: String): List<ResolveInfo> {
+                CFLoggerService.getInstance().d(TAG, "openUpiApp-->>$link")
                 return queryIntent(getUPIIntent("upi://pay"))
             }
 
             override fun onResponseReceived(returnedParams: Map<String, String>) {
-                Log.v(
-                    TAG,
-                    "Called onResponseReceived-->>${
-                        returnedParams.forEach { (key, value) ->
-                            println("$key = $value")
-                        }
-                    }"
-                )
-
+                CFLoggerService.getInstance().d(TAG, "onResponseReceived")
+                returnedParams.forEach { (key, value) ->
+                    CFLoggerService.getInstance().d(TAG, "Key--Value::$key--$value")
+                }
             }
 
             override fun openUpiApp(appPkg: String, url: String) {
-                Log.v(TAG, "Called openApp")
+                CFLoggerService.getInstance().d(TAG, "openUpiApp-->>$url")
                 val intent = getUPIIntent(url)
                 val resInfo = queryIntent(intent)
                 val upiClientResolveInfo: ResolveInfo? =
@@ -178,6 +175,7 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
                 packageManager.getApplicationLabel(pkg).toString()
 
             override fun setTheme(color: String) {
+                CFLoggerService.getInstance().d(TAG, "setTheme-->>$color")
                 setToolBarTheme("#$color")
             }
         }

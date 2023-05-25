@@ -2,8 +2,8 @@ package com.cashfree.susbcription.coresdk.payment
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.ResolveInfo
-import android.util.Log
 import android.webkit.JavascriptInterface
+import com.cashfree.pg.base.logger.CFLoggerService
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -21,7 +21,7 @@ class WebJSInterfaceImpl(private val callback: WebHelperInterface) {
 
     @JavascriptInterface
     fun paymentResult(result: String): String {
-        Log.v(TAG, "Called paymentResult -->> $result")
+        CFLoggerService.getInstance().d(TAG, "paymentResult-->>$result")
         val returnedParams: MutableMap<String, String> = mutableMapOf()
         try {
             val response = JSONObject(result)
@@ -40,7 +40,7 @@ class WebJSInterfaceImpl(private val callback: WebHelperInterface) {
 
     @JavascriptInterface
     fun getAppList(name: String): String {
-        Log.v(TAG, "Called getAppList -->> $name")
+        CFLoggerService.getInstance().d(TAG, "getAppList-->>$name")
         val resInfo: List<ResolveInfo> = callback.getUpiAppList(name)
         val packageNames = JSONArray()
         resInfo.forEach {
@@ -50,20 +50,20 @@ class WebJSInterfaceImpl(private val callback: WebHelperInterface) {
             }
             packageNames.put(appInfo)
         }
-        Log.v(TAG, "GetAppList -->> $packageNames")
+        CFLoggerService.getInstance().d(TAG, "getAppList-->>$packageNames")
         return packageNames.toString()
     }
 
     @JavascriptInterface
     fun openApp(upiClientPackage: String, upiURL: String): Boolean {
-        Log.v(TAG, "Called openApp -->> $upiClientPackage")
+        CFLoggerService.getInstance().d(TAG, "openApp-->>$upiClientPackage")
         callback.openUpiApp(upiClientPackage, upiURL);
         return true
     }
 
     @JavascriptInterface
     fun merchantTheme(config: String) {
-        Log.v(TAG, "Called merchantTheme -->> $config ")
+        CFLoggerService.getInstance().d(TAG, "merchantTheme-->>$config")
         val jsonObject = JSONObject(config)
         callback.setTheme(jsonObject.getString("theme_color"))
     }
