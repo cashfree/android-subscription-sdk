@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">SusbcriptionSDK</string>
+    <string name="app_name">Subscription Sample</string>
     <string name="subscription_id">Subscription Id</string>
     <string name="plan_id">Plan Id</string>
     <string name="customer_email">Customer Email</string>
     <string name="customer_phone">Customer Phone</string>
     <string name="return_url">Return Url</string>
-    <string name="create_subscription">Create Subscription</string>
+    <string name="create_subscription">Create Subscription &amp; Pay</string>
+    <string name="fetch_subscription">Fetch Subscription &amp; Pay</string>
+    <string name="sub_ref_id">Enter SubReferenceId</string>
+    <string name="payment_link">Enter Payment Url</string>
     <string name="make_payment">Make Payment</string>
 </resources>

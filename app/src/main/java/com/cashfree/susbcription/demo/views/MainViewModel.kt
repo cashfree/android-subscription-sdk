@@ -37,4 +37,21 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun fetchSubscription(headers: Map<String, String>, subRefId: String) {
+        _subscription.value = ApiState.Loading(true)
+        val job = viewModelScope.async {
+            service.fetchSubscription(headers, subRefId)
+        }
+        viewModelScope.launch {
+            try {
+                val result = job.await()
+                _subscription.value = ApiState.Loading(false)
+                _subscription.value = ApiState.Success(result)
+            } catch (e: Exception) {
+                _subscription.value = ApiState.Loading(false)
+                _subscription.value = ApiState.Failure(Throwable(e.message ?: "Some Error"))
+            }
+        }
+    }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="pay"
+                android:scheme="upi" />
+        </intent>
+        <package android:name="com.android.chrome" />
+    </queries>
+
+    <application>
+        <provider
+            android:name=".services.CFSubscriptionContentProvider"
+            android:authorities="${applicationId}.cf.subscription.content.provider"
+            android:exported="false" />
+
+        <meta-data
+            android:name="subscription_core_auto_initialize_enabled"
+            android:value="@bool/cf_subscription_core_auto_initialize_enabled" />
+
+        <meta-data
+            android:name="subscription_logging_level"
+            android:value="@integer/cf_subscription_logging_level" />
+
+        <activity
+            android:name=".ui.SubscriptionPaymentActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CFUITheme" />
+    </application>
+
+
+</manifest>

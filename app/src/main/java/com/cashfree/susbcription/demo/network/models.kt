@@ -20,15 +20,22 @@ sealed class ApiState<out T> {
  */
 data class SubscriptionResponse(
     @SerializedName("status")
-    private val status: String,
+    val status: String,
     @SerializedName("message")
-    private val message: String,
+    val message: String,
     @SerializedName("subReferenceId")
-    private val subReferenceId: String,
+    val subReferenceId: String,
     @SerializedName("authLink")
-    private val authLink: String,
+    val authLink: String?,
     @SerializedName("subStatus")
-    private val subStatus: String
+    val subStatus: String,
+    @SerializedName("subscription")
+    val subscription: Subscription? = null
+)
+
+data class Subscription(
+    @SerializedName("authLink")
+    val authLink: String,
 )
 
 /**
