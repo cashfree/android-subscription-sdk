@@ -21,15 +21,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
 import com.cashfree.pg.base.logger.CFLoggerService
 import com.cashfree.susbcription.coresdk.databinding.SubscriptionPaymentActivityBinding
+import com.cashfree.susbcription.coresdk.models.CFErrorResponse
+import com.cashfree.susbcription.coresdk.models.CFSubscriptionResponse
 import com.cashfree.susbcription.coresdk.payment.Constants
 import com.cashfree.susbcription.coresdk.payment.Constants.WB_INTENT_BRIDGE
 import com.cashfree.susbcription.coresdk.payment.WebHelperInterface
 import com.cashfree.susbcription.coresdk.payment.WebJSInterfaceImpl
+import com.cashfree.susbcription.coresdk.utils.CFCallbackUtil
+import com.cashfree.susbcription.coresdk.utils.CfUtils
 import com.cashfree.susbcription.coresdk.utils.getUPIIntent
 import com.cashfree.susbcription.coresdk.utils.queryIntent
+import org.json.JSONObject
 
 
-class SubscriptionPaymentActivity : AppCompatActivity() {
+internal class SubscriptionPaymentActivity : AppCompatActivity() {
 
     private val TAG = "SubscriptionPayment"
     private lateinit var binding: SubscriptionPaymentActivityBinding
@@ -42,7 +47,6 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = SubscriptionPaymentActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        CFLoggerService.getInstance().setLoggingLevel(3)
         setToolbar()
         setWebView()
         loadUrl()
@@ -128,6 +132,7 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
             override fun handleOnBackPressed() {
                 exitDialog = ExitDialog(this@SubscriptionPaymentActivity) {
                     finish()
+                    handleCancelled(CfUtils.getCancelledPaymentResponse())
                 }
                 if (!isFinishing && !isDestroyed) {
                     exitDialog?.show()
@@ -151,11 +156,9 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
                 return queryIntent(getUPIIntent("upi://pay"))
             }
 
-            override fun onResponseReceived(returnedParams: Map<String, String>) {
+            override fun onResponseReceived(jsonObject: JSONObject) {
                 CFLoggerService.getInstance().d(TAG, "onResponseReceived")
-                returnedParams.forEach { (key, value) ->
-                    CFLoggerService.getInstance().d(TAG, "Key--Value::$key--$value")
-                }
+                handlePaymentResponse(CfUtils.getPaymentResponse(jsonObject))
             }
 
             override fun openUpiApp(appPkg: String, url: String) {
@@ -179,6 +182,16 @@ class SubscriptionPaymentActivity : AppCompatActivity() {
                 setToolBarTheme("#$color")
             }
         }
+    }
+
+    private fun handleCancelled(error: CFErrorResponse) {
+        finish()
+        CFCallbackUtil.sendOnCancelled(error)
+    }
+
+    private fun handlePaymentResponse(response: CFSubscriptionResponse) {
+        finish()
+        CFCallbackUtil.sendOnVerify(response)
     }
 
     private fun getActivityResultLauncher(): ActivityResultLauncher<Intent> {

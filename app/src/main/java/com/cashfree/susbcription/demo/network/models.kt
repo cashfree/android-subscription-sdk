@@ -26,9 +26,16 @@ data class SubscriptionResponse(
     @SerializedName("subReferenceId")
     val subReferenceId: String,
     @SerializedName("authLink")
-    val authLink: String,
+    val authLink: String?,
     @SerializedName("subStatus")
-    val subStatus: String
+    val subStatus: String,
+    @SerializedName("subscription")
+    val subscription: Subscription? = null
+)
+
+data class Subscription(
+    @SerializedName("authLink")
+    val authLink: String,
 )
 
 /**

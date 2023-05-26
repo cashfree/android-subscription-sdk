@@ -5,12 +5,11 @@ import android.content.pm.ResolveInfo
 import android.webkit.JavascriptInterface
 import com.cashfree.pg.base.logger.CFLoggerService
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
 interface WebHelperInterface {
     fun getUpiAppList(link: String): List<ResolveInfo>
-    fun onResponseReceived(returnedParams: Map<String, String>)
+    fun onResponseReceived(jsonObject: JSONObject)
     fun openUpiApp(appPkg: String, url: String)
     fun getAppName(pkg: ApplicationInfo): String
     fun setTheme(color: String)
@@ -22,18 +21,7 @@ class WebJSInterfaceImpl(private val callback: WebHelperInterface) {
     @JavascriptInterface
     fun paymentResult(result: String): String {
         CFLoggerService.getInstance().d(TAG, "paymentResult-->>$result")
-        val returnedParams: MutableMap<String, String> = mutableMapOf()
-        try {
-            val response = JSONObject(result)
-            val iterator: Iterator<String> = response.keys()
-            while (iterator.hasNext()) {
-                val key = iterator.next()
-                returnedParams[key] = response.get(key).toString()
-            }
-        } catch (ex: JSONException) {
-            ex.printStackTrace()
-        }
-        callback.onResponseReceived(returnedParams)
+        callback.onResponseReceived(JSONObject(result))
         return "true"
     }
 

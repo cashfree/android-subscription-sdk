@@ -13,6 +13,19 @@
     </queries>
 
     <application>
+        <provider
+            android:name=".services.CFSubscriptionContentProvider"
+            android:authorities="${applicationId}.cf.subscription.content.provider"
+            android:exported="false" />
+
+        <meta-data
+            android:name="subscription_core_auto_initialize_enabled"
+            android:value="@bool/cf_subscription_core_auto_initialize_enabled" />
+
+        <meta-data
+            android:name="subscription_logging_level"
+            android:value="@integer/cf_subscription_logging_level" />
+
         <activity
             android:name=".ui.SubscriptionPaymentActivity"
             android:exported="false"
