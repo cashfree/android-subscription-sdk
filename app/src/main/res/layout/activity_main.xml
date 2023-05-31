@@ -32,6 +32,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/cf_dimen_16"
+                android:layout_marginTop="@dimen/cf_dimen_8">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="150dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_app_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:enabled="false"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/sm_env"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:text="@string/env_prod_test"
+                    android:textAppearance="?textAppearanceBody1" />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_subs_id"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

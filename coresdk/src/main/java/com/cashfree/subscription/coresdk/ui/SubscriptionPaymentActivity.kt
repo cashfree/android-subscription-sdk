@@ -84,10 +84,12 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setWebView() {
+        clearWebCache()
         with(binding.paymentWebView) {
             settings.apply {
                 javaScriptEnabled = true
                 mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
+                cacheMode = WebSettings.LOAD_NO_CACHE
             }
             addJavascriptInterface(webJsBridge, WB_INTENT_BRIDGE)
         }
@@ -117,7 +119,7 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
     private fun loadUrl() {
         intent.extras?.let { bundle ->
             bundle.getString(Constants.PAYMENT_URL)?.let { paymentLink ->
-                val source = bundle.getString(Constants.PAYMENT_SOURCE)
+                val source = bundle.getString(PAYMENT_SOURCE)
                 binding.paymentWebView.loadUrl(paymentLink, mapOf(PAYMENT_SOURCE to source))
             }
         }
@@ -181,12 +183,22 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
     }
 
     private fun handleCancelled(error: CFErrorResponse) {
+        clearWebCache()
         finish()
         CFCallbackUtil.sendOnCancelled(error)
     }
 
     private fun handlePaymentResponse(response: CFSubscriptionResponse) {
+        clearWebCache()
         finish()
         CFCallbackUtil.sendOnVerify(response)
+    }
+
+    private fun clearWebCache() {
+        with(binding.paymentWebView) {
+            clearHistory()
+            clearFormData()
+            clearCache(true)
+        }
     }
 }

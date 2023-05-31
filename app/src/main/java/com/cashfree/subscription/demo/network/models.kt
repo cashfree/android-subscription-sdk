@@ -36,6 +36,8 @@ data class SubscriptionResponse(
 data class Subscription(
     @SerializedName("authLink")
     val authLink: String,
+    @SerializedName("subReferenceId")
+    val subReferenceId: String,
 )
 
 /**

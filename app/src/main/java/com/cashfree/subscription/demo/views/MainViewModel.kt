@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cashfree.subscription.demo.helper.Config
 import com.cashfree.subscription.demo.network.ApiState
 import com.cashfree.subscription.demo.network.SubscriptionRequest
 import com.cashfree.subscription.demo.network.SubscriptionResponse
@@ -24,7 +25,7 @@ class MainViewModel @Inject constructor(
     fun createSubscription(headers: Map<String, String>, param: SubscriptionRequest) {
         _subscription.value = ApiState.Loading(true)
         val job = viewModelScope.async {
-            service.createSubscription(headers, param)
+            service.createSubscription(headers, param, Config.environment.url)
         }
         viewModelScope.launch {
             try {
@@ -41,7 +42,7 @@ class MainViewModel @Inject constructor(
     fun fetchSubscription(headers: Map<String, String>, subRefId: String) {
         _subscription.value = ApiState.Loading(true)
         val job = viewModelScope.async {
-            service.fetchSubscription(headers, subRefId)
+            service.fetchSubscription(headers, String.format("%s%s", Config.environment.url, subRefId))
         }
         viewModelScope.launch {
             try {
