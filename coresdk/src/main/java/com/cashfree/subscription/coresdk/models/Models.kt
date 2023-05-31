@@ -1,5 +1,7 @@
 package com.cashfree.subscription.coresdk.models
 
+import com.cashfree.subscription.coresdk.base.CFPayment
+
 /**
 "subscription_id": "test_checkout_001ywy",
 "sub_reference_id": 73967,
@@ -26,3 +28,5 @@ internal enum class AuthStatus(val status: String) {
     INITIALIZED("INITIALIZED"),
     ACTIVE("ACTIVE")
 }
+
+data class CFSubscriptionPayment(val paymentUrl: String) : CFPayment()

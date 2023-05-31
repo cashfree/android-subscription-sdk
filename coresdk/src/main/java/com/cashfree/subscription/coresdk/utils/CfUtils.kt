@@ -3,7 +3,6 @@ package com.cashfree.subscription.coresdk.utils
 import com.cashfree.subscription.coresdk.models.AuthStatus
 import com.cashfree.subscription.coresdk.models.CFErrorResponse
 import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
-import com.cashfree.subscription.coresdk.payment.Constants
 import org.json.JSONObject
 
 internal class CfUtils {

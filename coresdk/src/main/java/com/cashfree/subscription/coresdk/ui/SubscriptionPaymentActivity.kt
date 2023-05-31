@@ -17,8 +17,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.cashfree.pg.base.logger.CFLoggerService
 import com.cashfree.subscription.coresdk.models.CFErrorResponse
 import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
-import com.cashfree.subscription.coresdk.payment.Constants
-import com.cashfree.subscription.coresdk.payment.Constants.WB_INTENT_BRIDGE
+import com.cashfree.subscription.coresdk.utils.Constants
 import com.cashfree.subscription.coresdk.payment.WebHelperInterface
 import com.cashfree.subscription.coresdk.payment.WebJSInterfaceImpl
 import com.cashfree.subscription.coresdk.utils.CFCallbackUtil
@@ -26,6 +25,8 @@ import com.cashfree.subscription.coresdk.utils.CfUtils
 import com.cashfree.subscription.coresdk.utils.getUPIIntent
 import com.cashfree.subscription.coresdk.utils.queryIntent
 import com.cashfree.subscription.coresdk.databinding.SubscriptionPaymentActivityBinding
+import com.cashfree.subscription.coresdk.utils.Constants.PAYMENT_SOURCE
+import com.cashfree.subscription.coresdk.utils.Constants.WB_INTENT_BRIDGE
 import org.json.JSONObject
 
 
@@ -109,7 +110,6 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
                 CFLoggerService.getInstance().d(TAG, "shouldOverrideUrlLoading-->>$url")
                 return false
             }
-
         }
     }
 
@@ -117,7 +117,8 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
     private fun loadUrl() {
         intent.extras?.let { bundle ->
             bundle.getString(Constants.PAYMENT_URL)?.let { paymentLink ->
-                binding.paymentWebView.loadUrl(paymentLink)
+                val source = bundle.getString(Constants.PAYMENT_SOURCE)
+                binding.paymentWebView.loadUrl(paymentLink, mapOf(PAYMENT_SOURCE to source))
             }
         }
     }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cashfree.subscription.coresdk.channel.CFCheckoutResponseCallback
 import com.cashfree.subscription.coresdk.models.CFErrorResponse
 import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
+import com.cashfree.subscription.coresdk.models.CFSubscriptionPayment
 import com.cashfree.subscription.coresdk.services.CFSubscriptionPaymentService
 import com.cashfree.subscription.demo.helper.Util
 import com.cashfree.subscription.demo.helper.visibility
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openWebPaymentFlow(url: String) {
-        CFSubscriptionPaymentService.doPayment(this, url)
+        CFSubscriptionPaymentService.doPayment(this, CFSubscriptionPayment(url))
     }
 
     private fun initBasicData() {
@@ -93,8 +94,8 @@ class MainActivity : AppCompatActivity() {
             tieEmail.setText("sidharth.shambu@cashfree.com")
             tiePhone.setText("9445737949")
             tieReturnUrl.setText("www.google.com")
-            tieSubRefId.setText("138329")
-            tiePaymentUrl.setText("https://cfre.in/2r0djft")
+            tieSubRefId.setText("184202")
+            tiePaymentUrl.setText("https://cfre.in/3sdxs0c")
         }
     }
 
