@@ -13,6 +13,9 @@ android {
     defaultConfig {
         minSdk = Versions.minSdk
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("Integer", "VERSION_CODE", "${Versions.apiVersionCode}")
+        buildConfigField("String", "VERSION_NAME", "\"${Versions.apiVersionName}\"")
     }
 
     buildTypes {
@@ -37,8 +40,7 @@ android {
 }
 
 dependencies {
-    //implementation(Dependencies.base)
-    implementation ("com.cashfree.pg:base:1.0.1")
+    implementation(Dependencies.base)
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appcompat)
     implementation(Dependencies.material)
