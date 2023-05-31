@@ -72,5 +72,5 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     kapt(Dependencies.hiltCompiler)
 
-    debugImplementation(project(":coreSdk"))
+    debugImplementation(project(":coresdk"))
 }
