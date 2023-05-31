@@ -94,8 +94,8 @@ class MainActivity : AppCompatActivity() {
             tieEmail.setText("sidharth.shambu@cashfree.com")
             tiePhone.setText("9445737949")
             tieReturnUrl.setText("www.google.com")
-            tieSubRefId.setText("184202")
-            tiePaymentUrl.setText("https://cfre.in/3sdxs0c")
+            tieSubRefId.setText("247197")
+            tiePaymentUrl.setText("https://cfre.in/nzishz7")
         }
     }
 

@@ -4,7 +4,7 @@ import android.os.Build
 import com.cashfree.subscription.coresdk.BuildConfig
 import java.util.*
 
-open class CFPayment {
+abstract class CFPayment {
 
     private var sdkFramework: CFSDKFramework = CFSDKFramework.ANDROID
     private var sdkFlavour: CFSDKFlavour = CFSDKFlavour.WEB_CHECKOUT

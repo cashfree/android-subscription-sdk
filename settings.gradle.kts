@@ -15,4 +15,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Subscription SDK"
-include( ":app",":coreSdk")
+include( ":app",":coresdk")
