@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         handlePaymentClick()
         addPaymentCallback()
+        binding.tiePaymentUrl.setText("https://cfre.in/gjxrigv")
     }
 
     private fun handlePaymentClick() {
