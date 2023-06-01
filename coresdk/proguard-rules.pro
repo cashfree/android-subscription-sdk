@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.cashfree.subscription.coresdk.** { *; }
+-keep interface com.cashfree.subscription.coresdk.** { *; }
+
+-repackageclasses 'com.cashfree.subscription.coresdk'
+-allowaccessmodification
+-useuniqueclassmembernames
+-keeppackagenames doNotKeepAThing

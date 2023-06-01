@@ -6,6 +6,8 @@ plugins {
     id(Module.Plugin.kotlinAndroid)
 }
 
+apply(from = "${rootProject.projectDir}/scripts/publish-module.gradle")
+
 android {
     namespace = "com.cashfree.subscription.coresdk"
     compileSdk = Versions.compileSdk
@@ -24,7 +26,7 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile ("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -40,7 +42,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.base)
+    api(Dependencies.base)
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appcompat)
     implementation(Dependencies.material)

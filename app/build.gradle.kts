@@ -1,4 +1,5 @@
 @file:Suppress("UnstableApiUsage")
+
 import Module.Dependencies
 
 plugins {
@@ -24,6 +25,26 @@ android {
         buildConfigField("Integer", "VERSION_CODE", "${Versions.apiVersionCode}")
         buildConfigField("String", "VERSION_NAME", "\"${Versions.apiVersionName}\"")
 
+    }
+
+    productFlavors {
+        flavorDimensions.add("tier")
+        create("demo") {
+            versionNameSuffix = "-demo"
+            dimension = flavorDimensions[0]
+        }
+    }
+
+    buildTypes {
+        named("debug") {
+            isMinifyEnabled = false
+            isRenderscriptDebuggable = true
+        }
+        named("release") {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("debug")
+        }
     }
 
     buildTypes {
@@ -72,5 +93,6 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     kapt(Dependencies.hiltCompiler)
 
+    releaseApi(Dependencies.subscription)
     debugImplementation(project(":coresdk"))
 }

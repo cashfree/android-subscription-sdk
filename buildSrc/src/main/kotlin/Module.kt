@@ -4,6 +4,7 @@ object Module {
         const val kotlinAndroid = "org.jetbrains.kotlin.android"
         const val androidApplication = "com.android.application"
         const val hiltAndroid = "com.google.dagger.hilt.android"
+        const val mavenPublish = "maven-publish"
     }
 
     object Dependencies {
@@ -29,6 +30,7 @@ object Module {
             const val viewModelKtx = "2.6.1"
             const val hiltAndroid = "2.44"
             const val hiltCompiler = "2.44"
+            const val subscription = "0.0.1"
         }
 
         const val coreKtx = "androidx.core:core-ktx:${Version.coreKtx}"
@@ -56,5 +58,6 @@ object Module {
 
         const val base = "com.cashfree.pg:base:${Version.baseVersion}"
         const val cf_analytics = "com.cashfree.pg:analytics:${Version.analyticsVersion}"
+        const val subscription = "com.cashfree.subscription:coresdk:${Version.subscription}"
     }
 }
