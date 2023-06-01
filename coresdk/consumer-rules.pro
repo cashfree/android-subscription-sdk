@@ -1,0 +1,5 @@
+-keep class com.cashfree.subscription.coresdk.** { *; }
+-keep interface com.cashfree.subscription.coresdk.** { *; }
+-keepattributes Exceptions
+-keepattributes MethodParameters
+-keepparameternames
