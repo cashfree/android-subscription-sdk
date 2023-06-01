@@ -4,19 +4,20 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.Url
 
 interface SubscriptionService {
 
-    @POST("subscriptions")
+    @POST
     suspend fun createSubscription(
         @HeaderMap header: Map<String, String>,
-        @Body params: SubscriptionRequest
+        @Body params: SubscriptionRequest,
+        @Url url: String
     ): SubscriptionResponse
 
-    @GET("subscriptions/{subRefId}")
+    @GET
     suspend fun fetchSubscription(
         @HeaderMap header: Map<String, String>,
-        @Path("subRefId") subRefId: String
+        @Url url:String
     ): SubscriptionResponse
 }

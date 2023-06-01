@@ -9,14 +9,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.cashfree.subscription.coresdk.channel.CFCheckoutResponseCallback
 import com.cashfree.subscription.coresdk.models.CFErrorResponse
-import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
 import com.cashfree.subscription.coresdk.models.CFSubscriptionPayment
+import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
 import com.cashfree.subscription.coresdk.services.CFSubscriptionPaymentService
-import com.cashfree.subscription.demo.helper.Util
+import com.cashfree.subscription.demo.databinding.ActivityMainBinding
+import com.cashfree.subscription.demo.helper.Config
+import com.cashfree.subscription.demo.helper.Environment
 import com.cashfree.subscription.demo.helper.visibility
 import com.cashfree.subscription.demo.network.ApiState
 import com.cashfree.subscription.demo.network.SubscriptionRequest
-import com.cashfree.subscription.demo.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,6 +53,16 @@ class MainActivity : AppCompatActivity() {
             if (subRefId.isEmpty().not()) fetchExistingSubscription(subRefId)
             else showToast("SubRefId can't be empty")
         }
+
+        binding.smEnv.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.tieAppId.setText(Environment.PROD_TEST.clientId)
+                Config.environment = Environment.PROD_TEST
+            } else {
+                binding.tieAppId.setText(Environment.SANDBOX.clientId)
+                Config.environment = Environment.SANDBOX
+            }
+        }
     }
 
     private fun observeDataChange() {
@@ -59,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             when (state) {
                 is ApiState.Success -> {
                     state.data.subscription?.let {
+                        updateUIData(it.subReferenceId, it.authLink)
                         openWebPaymentFlow(it.authLink)
                     }
                     state.data.authLink?.let {
@@ -89,6 +101,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBasicData() {
         with(binding) {
+            smEnv.isChecked = false
+            tieAppId.setText(Environment.SANDBOX.clientId)
             tieSubsId.setText("test-sdk-2")
             tiePlanId.setText("nice-ondemand-1")
             tieEmail.setText("sidharth.shambu@cashfree.com")
@@ -107,11 +121,11 @@ class MainActivity : AppCompatActivity() {
         val returnUrl = binding.tieReturnUrl.text.toString()
 
         val request = SubscriptionRequest(subsId, planId, email, phone, returnUrl)
-        viewModel.createSubscription(Util.header, request)
+        viewModel.createSubscription(Config.getHeaders(), request)
     }
 
     private fun fetchExistingSubscription(subRefId: String) {
-        viewModel.fetchSubscription(Util.header, subRefId)
+        viewModel.fetchSubscription(Config.getHeaders(), subRefId)
     }
 
     private fun addPaymentCallback() {

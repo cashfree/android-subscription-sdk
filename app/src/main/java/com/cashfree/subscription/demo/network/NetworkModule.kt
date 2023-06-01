@@ -1,5 +1,6 @@
 package com.cashfree.subscription.demo.network
 
+import com.cashfree.subscription.demo.helper.Environment
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,14 +16,11 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    companion object {
-        const val BASE_URL = "https://test-k8s.cashfree.com/subscriptionapi/api/v2/"
-    }
 
     @Provides
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Environment.SANDBOX.url)
             .client(
                 OkHttpClient.Builder()
                     .connectTimeout(30, TimeUnit.SECONDS)
