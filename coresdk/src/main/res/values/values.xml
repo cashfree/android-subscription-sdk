@@ -1,4 +1,4 @@
 <resources>
     <bool name="cf_subscription_core_auto_initialize_enabled">true</bool>
-    <integer name="cf_subscription_logging_level">3</integer>
+    <integer name="cf_subscription_logging_level">4</integer>
 </resources>
