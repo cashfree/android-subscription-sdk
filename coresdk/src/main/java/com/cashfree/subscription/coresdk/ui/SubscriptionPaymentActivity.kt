@@ -84,7 +84,6 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setWebView() {
-        clearWebCache()
         with(binding.paymentWebView) {
             settings.apply {
                 javaScriptEnabled = true
@@ -183,22 +182,12 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
     }
 
     private fun handleCancelled(error: CFErrorResponse) {
-        clearWebCache()
         finish()
         CFCallbackUtil.sendOnCancelled(error)
     }
 
     private fun handlePaymentResponse(response: CFSubscriptionResponse) {
-        clearWebCache()
         finish()
         CFCallbackUtil.sendOnVerify(response)
-    }
-
-    private fun clearWebCache() {
-        with(binding.paymentWebView) {
-            clearHistory()
-            clearFormData()
-            clearCache(true)
-        }
     }
 }
