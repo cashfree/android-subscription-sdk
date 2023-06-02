@@ -12,6 +12,7 @@ import com.cashfree.subscription.demo.network.SubscriptionService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,15 +35,36 @@ class MainViewModel @Inject constructor(
                 _subscription.value = ApiState.Success(result)
             } catch (e: Exception) {
                 _subscription.value = ApiState.Loading(false)
-                _subscription.value = ApiState.Failure(Throwable(e.message ?: "Some Error"))
+                handleError(e)
             }
         }
+    }
+
+    private fun handleError(e: Exception) {
+        var message = e.message ?: "Some Error occurred"
+        if(e is HttpException){
+            when(e.code()){
+                409->{
+                    message = "Subscription already present for this SubscriptionId"
+                }
+                404->{
+                    message = "Subscription Does not exist for this SubReferenceId"
+                }
+                400->{
+                    message = "Bad Request, Please check Params & Environment under test"
+                }
+            }
+        }
+        _subscription.value = ApiState.Failure(Throwable(message))
     }
 
     fun fetchSubscription(headers: Map<String, String>, subRefId: String) {
         _subscription.value = ApiState.Loading(true)
         val job = viewModelScope.async {
-            service.fetchSubscription(headers, String.format("%s%s", Config.environment.url, subRefId))
+            service.fetchSubscription(
+                headers,
+                String.format("%s%s", Config.environment.url, subRefId)
+            )
         }
         viewModelScope.launch {
             try {
@@ -51,7 +73,7 @@ class MainViewModel @Inject constructor(
                 _subscription.value = ApiState.Success(result)
             } catch (e: Exception) {
                 _subscription.value = ApiState.Loading(false)
-                _subscription.value = ApiState.Failure(Throwable(e.message ?: "Some Error"))
+                handleError(e)
             }
         }
     }
