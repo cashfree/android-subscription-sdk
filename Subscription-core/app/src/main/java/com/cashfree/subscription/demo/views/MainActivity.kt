@@ -70,8 +70,10 @@ class MainActivity : AppCompatActivity() {
             when (state) {
                 is ApiState.Success -> {
                     state.data.subscription?.let {
-                        updateUIData(it.subReferenceId, it.authLink)
-                        openWebPaymentFlow(it.authLink)
+                        if (!"ACTIVE".contentEquals(it.status)) {
+                            updateUIData(it.subReferenceId, it.authLink)
+                            openWebPaymentFlow(it.authLink)
+                        } else showToast("Subscription Already Active.")
                     }
                     state.data.authLink?.let {
                         updateUIData(state.data.subReferenceId, it)

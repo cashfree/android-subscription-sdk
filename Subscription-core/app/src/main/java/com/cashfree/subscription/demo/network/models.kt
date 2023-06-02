@@ -38,6 +38,8 @@ data class Subscription(
     val authLink: String,
     @SerializedName("subReferenceId")
     val subReferenceId: String,
+    @SerializedName("status")
+    val status: String,
 )
 
 /**
