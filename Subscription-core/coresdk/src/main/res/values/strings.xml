@@ -2,7 +2,7 @@
 <resources>
     <string name="checkout">Checkout</string>
     <string name="cf_exiting_payment">Exiting Payment</string>
-    <string name="cf_are_you_sure_you_want_to_exit_payment">Are you sure you want to exit payment?</string>
+    <string name="cf_are_you_sure_you_want_to_exit_payment">Are you sure you want to exit checkout page?</string>
     <string name="cf_cta_yes">Yes</string>
     <string name="cf_cta_no">No</string>
 </resources>
