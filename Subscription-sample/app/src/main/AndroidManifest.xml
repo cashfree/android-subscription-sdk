@@ -7,7 +7,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sample">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityKotlin"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivityJava"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
