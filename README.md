@@ -4,13 +4,13 @@ This repository will have subscription payment flow for Android platform.
 ### Sample
 <img src="media/sample.gif" alt="Subscription Sample" width="300" height="500"/>
 
-### [Android Integration]((https://github.com/cashfree/android-subscription-sdk/blob/master/Subscription-sample/app/src/main/java/com/cashfree/susbcription/sample/MainActivity.kt)) 
+### [Android Integration](https://github.com/cashfree/android-subscription-sdk/blob/master/Subscription-sample/app/src/main/java/com/cashfree/susbcription/sample/MainActivityKotlin.kt) 
 
 #### Steps
 
-1. Add Maven url for cashfree subscription SDK in project level `build.gradle`.
+1. Add Maven url for Cashfree subscription SDK in project level `build.gradle`.
 
-   `maven { url "https://maven.cashfree.com/development"}`
+   `maven { url "https://maven.cashfree.com/release"}`
 
 2. Add sdk dependencies in app level `build.gradle`.
 
@@ -25,7 +25,7 @@ This repository will have subscription payment flow for Android platform.
    `CFSubscriptionPaymentService.doPayment(this, CFSubscriptionPayment(url))`
 
 
-Click [here](https://docs.cashfree.com/docs/) for more Documentation.
+Click [here](https://docs.cashfree.com/docs/subscription-android-sdk) for more Documentation.
 
 ### License
 

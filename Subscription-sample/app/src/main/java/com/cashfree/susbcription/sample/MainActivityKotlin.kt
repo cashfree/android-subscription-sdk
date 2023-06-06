@@ -11,9 +11,9 @@ import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
 import com.cashfree.subscription.coresdk.services.CFSubscriptionPaymentService
 import com.cashfree.susbcription.sample.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivityKotlin : AppCompatActivity() {
 
-    private val TAG = "SubscriptionPayment"
+    private val TAG = "MainActivityKotlin"
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
