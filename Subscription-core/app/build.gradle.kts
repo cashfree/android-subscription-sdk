@@ -95,4 +95,5 @@ dependencies {
 
     releaseApi(Dependencies.subscription)
     debugImplementation(project(":coresdk"))
+    debugImplementation(Dependencies.leakCanary)
 }
