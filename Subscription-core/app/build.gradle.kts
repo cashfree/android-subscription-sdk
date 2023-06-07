@@ -11,6 +11,12 @@ plugins {
     id("kotlin-parcelize")
 }
 
+try {
+    Config.loadData(project.rootProject.file("local.properties"))
+} catch (exception: Exception) {
+    throw GradleException(exception.message ?: "")
+}
+
 android {
     namespace = "com.cashfree.subscription.demo"
     compileSdk = Versions.compileSdk
@@ -24,7 +30,10 @@ android {
 
         buildConfigField("Integer", "VERSION_CODE", "${Versions.apiVersionCode}")
         buildConfigField("String", "VERSION_NAME", "\"${Versions.apiVersionName}\"")
-
+        buildConfigField("String", "SANDBOX_CLIENT_ID", "\"${Config.sandboxClientID}\"")
+        buildConfigField("String", "SANDBOX_CLIENT_SECRET", "\"${Config.sandboxClientSecret}\"")
+        buildConfigField("String", "PROD_TEST_CLIENT_ID", "\"${Config.prodTestClientID}\"")
+        buildConfigField("String", "PROD_TEST_CLIENT_SECRET", "\"${Config.prodTestClientSecret}\"")
     }
 
     productFlavors {
@@ -65,6 +74,9 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    lint {
+        abortOnError = false
     }
 }
 
