@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
 
 internal fun Activity.queryIntent(intent: Intent): List<ResolveInfo> {
@@ -61,4 +62,9 @@ internal fun getUPIIntent(url: String): Intent {
         action = Intent.ACTION_VIEW
         data = Uri.parse(url)
     }
+}
+
+internal fun View.visibility(isVisible: Boolean) {
+    if (isVisible) this.visibility = View.VISIBLE
+    else this.visibility = View.GONE
 }

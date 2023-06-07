@@ -27,6 +27,7 @@ import com.cashfree.subscription.coresdk.utils.queryIntent
 import com.cashfree.subscription.coresdk.databinding.SubscriptionPaymentActivityBinding
 import com.cashfree.subscription.coresdk.utils.Constants.PAYMENT_SOURCE
 import com.cashfree.subscription.coresdk.utils.Constants.WB_INTENT_BRIDGE
+import com.cashfree.subscription.coresdk.utils.visibility
 import org.json.JSONObject
 
 
@@ -46,6 +47,7 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
         binding = SubscriptionPaymentActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setToolbar()
+        handleLoader(true)
         setWebView()
         loadUrl()
         addBackPressDispatcher()
@@ -102,6 +104,7 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 CFLoggerService.getInstance().d(TAG, "onPageFinished-->>$url")
+                handleLoader(false)
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -114,6 +117,10 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
                 return false
             }
         }
+    }
+
+    private fun handleLoader(isVisible: Boolean) {
+        binding.cfLoader.visibility(isVisible)
     }
 
 
