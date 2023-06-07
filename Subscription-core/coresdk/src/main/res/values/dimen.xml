@@ -5,6 +5,7 @@
     <dimen name="cf_dimen_16">16dp</dimen>
     <dimen name="cf_dimen_24">24dp</dimen>
     <dimen name="cf_dimen_32">32dp</dimen>
+    <dimen name="cf_dimen_56">56dp</dimen>
 
     <!--TextSize-->
     <dimen name="cf_text_size_12">12sp</dimen>
