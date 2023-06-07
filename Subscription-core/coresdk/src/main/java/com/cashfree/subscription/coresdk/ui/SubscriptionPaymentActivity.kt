@@ -39,6 +39,8 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
         WebJSInterfaceImpl(addWebHelperInterfaceImplementation())
     }
 
+    private var response: CFSubscriptionResponse? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SubscriptionPaymentActivityBinding.inflate(layoutInflater)
@@ -128,8 +130,9 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 exitDialog = ExitDialog(this@SubscriptionPaymentActivity) {
-                    finish()
-                    handleCancelled(CfUtils.getCancelledPaymentResponse())
+                    response?.let {
+                        handlePaymentResponse(it)
+                    } ?: handleCancelled(CfUtils.getCancelledPaymentResponse())
                 }
                 if (!isFinishing && !isDestroyed) {
                     exitDialog?.show()
@@ -156,6 +159,11 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
             override fun onResponseReceived(jsonObject: JSONObject) {
                 CFLoggerService.getInstance().d(TAG, "onResponseReceived")
                 handlePaymentResponse(CfUtils.getPaymentResponse(jsonObject))
+            }
+
+            override fun onSubscriptionStatus(jsonObject: JSONObject) {
+                CFLoggerService.getInstance().d(TAG, "onSubscriptionStatus")
+                response = CfUtils.getPaymentResponse(jsonObject)
             }
 
             override fun openUpiApp(appPkg: String, url: String) {
@@ -189,5 +197,11 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
     private fun handlePaymentResponse(response: CFSubscriptionResponse) {
         finish()
         CFCallbackUtil.sendOnVerify(response)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        response = null
+        webJsBridge.clearCallback()
     }
 }

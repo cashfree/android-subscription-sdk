@@ -43,7 +43,10 @@ internal class ExitDialog constructor(
 
     private fun handleActionClick() {
         with(binding) {
-            btnYes.setOnClickListener { action.invoke() }
+            btnYes.setOnClickListener {
+                dismiss()
+                action.invoke()
+            }
             btnNo.setOnClickListener { dismiss() }
         }
     }
