@@ -9,10 +9,10 @@ object Module {
 
     object Dependencies {
         internal object Version {
-            const val coreKtx = "1.10.1"
+            const val coreKtx = "1.5.0"
             const val activityKtx = "1.7.1"
-            const val appCompatVersion = "1.6.1"
-            const val materialVersion = "1.9.0"
+            const val appCompatVersion = "1.5.0"
+            const val materialVersion = "1.5.0"
             const val constraintLayoutVersion = "2.1.4"
             const val gsonVersion = "2.8.8"
             const val retrofitVersion = "2.9.0"

@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             smEnv.isChecked = false
             tieAppId.setText(Environment.SANDBOX.clientId)
-            tieSubsId.setText("test-sdk-2")
+            tieSubsId.setText("test-sdk-2${getRandomString(4)}")
             tiePlanId.setText("nice-ondemand-1")
             tieEmail.setText("sidharth.shambu@cashfree.com")
             tiePhone.setText("9445737949")
@@ -113,6 +113,13 @@ class MainActivity : AppCompatActivity() {
             tieSubRefId.setText("247197")
             tiePaymentUrl.setText("https://cfre.in/nzishz7")
         }
+    }
+
+    private fun getRandomString(length: Int) : String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
     }
 
     private fun createSubscription() {

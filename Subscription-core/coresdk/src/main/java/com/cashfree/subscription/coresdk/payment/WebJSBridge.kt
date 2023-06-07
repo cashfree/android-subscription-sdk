@@ -27,24 +27,39 @@ internal class WebJSInterfaceImpl(private var callback: WebHelperInterface?) {
     }
 
     @JavascriptInterface
-    fun getSubscriptionStatus(result: String){
+    fun getSubscriptionStatus(result: String) {
         CFLoggerService.getInstance().d(TAG, "subscriptionStatus-->>$result")
         callback?.onSubscriptionStatus(JSONObject(result))
     }
 
 
     @JavascriptInterface
-    fun getAppList(name: String): String {
-        CFLoggerService.getInstance().d(TAG, "getAppList-->>$name")
-        val resInfo: List<ResolveInfo>? = callback?.getUpiAppList(name)
+    fun getAppList(upiPay: String?, upiMandate: String?): String {
+        CFLoggerService.getInstance()
+            .d(TAG, "getAppList-->>PayUri:${upiPay}---MandateUri:${upiMandate}")
+        val resInfoUpiPay: List<ResolveInfo>? = upiPay?.let {
+            callback?.getUpiAppList(it)
+        }
+        val resInfoUpiMandate: List<ResolveInfo>? = upiMandate?.let {
+            callback?.getUpiAppList(it)
+        }
+        val upiList = mutableMapOf<String, String?>()
+        fun updateUpiList(resolveInfo: ResolveInfo) {
+            val packageName = resolveInfo.activityInfo.packageName
+            val appName = callback?.getAppName(resolveInfo.activityInfo.applicationInfo)
+            upiList[packageName] = appName
+        }
+        resInfoUpiPay?.forEach { updateUpiList(it) }
+        resInfoUpiMandate?.forEach { updateUpiList(it) }
         val packageNames = JSONArray()
-        resInfo?.forEach {
+        upiList.forEach { (key, value) ->
             val appInfo = JSONObject().apply {
-                put("appName", callback?.getAppName(it.activityInfo.applicationInfo))
-                put("appPackage", it.activityInfo.packageName)
+                put("appPackage", key)
+                put("appName", value)
             }
             packageNames.put(appInfo)
         }
+
         CFLoggerService.getInstance().d(TAG, "getAppList-->>$packageNames")
         return packageNames.toString()
     }

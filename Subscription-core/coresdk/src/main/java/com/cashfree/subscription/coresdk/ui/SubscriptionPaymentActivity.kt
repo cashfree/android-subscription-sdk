@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -117,6 +118,8 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
                 return false
             }
         }
+
+        binding.paymentWebView.webChromeClient = object: WebChromeClient(){}
     }
 
     private fun handleLoader(isVisible: Boolean) {

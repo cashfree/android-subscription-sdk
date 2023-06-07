@@ -14,8 +14,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = URI("https://maven.cashfree.com/development")}
+        //maven { url = URI("https://maven.cashfree.com/development")}
+        maven { url = URI("https://maven.cashfree.com/release") }
     }
 }
-rootProject.name = "Subscription SDK"
+rootProject.name = "Subscription Core"
 include(":app", ":coresdk")

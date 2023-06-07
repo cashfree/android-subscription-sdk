@@ -1,7 +1,6 @@
-## Subscription Payment For Mobile SDKs
-This repository will have subscription payment flow for Android platform.
+## Subscription Payment Sample
 
-### Sample
+### Sample Video
 <img src="media/sample.gif" alt="Subscription Sample" width="250" height="500"/>
 
 ### [Android Integration](https://github.com/cashfree/android-subscription-sdk/blob/master/Subscription-sample/app/src/main/java/com/cashfree/susbcription/sample/MainActivityKotlin.kt) 
@@ -24,9 +23,10 @@ This repository will have subscription payment flow for Android platform.
 
    `CFSubscriptionPaymentService.doPayment(this, CFSubscriptionPayment(url))`
 
+### [Sample Kotlin](https://github.com/cashfree/android-subscription-sdk/blob/master/Subscription-sample/app/src/main/java/com/cashfree/susbcription/sample/MainActivityKotlin.kt)
+### [Sample Java](https://github.com/cashfree/android-subscription-sdk/blob/master/Subscription-sample/app/src/main/java/com/cashfree/susbcription/sample/MainActivityJava.java)
+
+
+
 
 Click [here](https://docs.cashfree.com/docs/subscription-android-sdk) for more Documentation.
-
-### License
-
-MIT
