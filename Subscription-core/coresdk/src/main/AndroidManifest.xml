@@ -9,6 +9,12 @@
                 android:host="mandate"
                 android:scheme="upi" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="pay"
+                android:scheme="upi" />
+        </intent>
         <package android:name="com.android.chrome" />
     </queries>
 

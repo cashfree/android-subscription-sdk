@@ -17,5 +17,5 @@ dependencyResolutionManagement {
         maven { url = URI("https://maven.cashfree.com/development")}
     }
 }
-rootProject.name = "Subscription SDK"
+rootProject.name = "Subscription Core"
 include(":app", ":coresdk")
