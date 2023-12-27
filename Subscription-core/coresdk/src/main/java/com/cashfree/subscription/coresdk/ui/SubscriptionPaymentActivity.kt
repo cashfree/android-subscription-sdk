@@ -1,12 +1,15 @@
 package com.cashfree.subscription.coresdk.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -16,18 +19,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
 import com.cashfree.pg.base.logger.CFLoggerService
+import com.cashfree.subscription.coresdk.databinding.SubscriptionPaymentActivityBinding
 import com.cashfree.subscription.coresdk.models.CFErrorResponse
 import com.cashfree.subscription.coresdk.models.CFSubscriptionResponse
-import com.cashfree.subscription.coresdk.utils.Constants
 import com.cashfree.subscription.coresdk.payment.WebHelperInterface
 import com.cashfree.subscription.coresdk.payment.WebJSInterfaceImpl
 import com.cashfree.subscription.coresdk.utils.CFCallbackUtil
 import com.cashfree.subscription.coresdk.utils.CfUtils
-import com.cashfree.subscription.coresdk.utils.getUPIIntent
-import com.cashfree.subscription.coresdk.utils.queryIntent
-import com.cashfree.subscription.coresdk.databinding.SubscriptionPaymentActivityBinding
+import com.cashfree.subscription.coresdk.utils.Constants
 import com.cashfree.subscription.coresdk.utils.Constants.PAYMENT_SOURCE
 import com.cashfree.subscription.coresdk.utils.Constants.WB_INTENT_BRIDGE
+import com.cashfree.subscription.coresdk.utils.getUPIIntent
+import com.cashfree.subscription.coresdk.utils.queryIntent
 import com.cashfree.subscription.coresdk.utils.visibility
 import org.json.JSONObject
 
@@ -185,7 +188,7 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
 
                 upiClientResolveInfo?.let {
                     intent.setClassName(it.activityInfo.packageName, it.activityInfo.name)
-                    startActivity(intent)
+                    startActivityForResult(intent, 1000)
                 }
             }
 
@@ -196,6 +199,14 @@ internal class SubscriptionPaymentActivity : AppCompatActivity() {
                 CFLoggerService.getInstance().d(TAG, "setTheme-->>$color")
                 setToolBarTheme("#$color")
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && requestCode == 1000) {
+            binding.paymentWebView.evaluateJavascript("window.showVerifyUI()", ValueCallback<String?> {
+            })
         }
     }
 

@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             tiePhone.setText("9445737949")
             tieReturnUrl.setText("www.google.com")
             tieSubRefId.setText("247197")
-            tiePaymentUrl.setText("https://cfre.in/nzishz7")
+            tiePaymentUrl.setText("https://prod.cashfree.com/pgbillpaywebapp/#1lgboe3rv9mscws112j1e")
         }
     }
 
